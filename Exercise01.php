@@ -1,20 +1,34 @@
 <?php
-    $quantityMilk = 0;
-    $quantitySoftDrink = 0;
-    // session_star();
+// Creamos sesión con el metodo
+session_start();
 
+    //Configuramos funcion session para inicilizar el contador a 0 si no hay productos
+if(!isset($SESSION['softDrink'])){
+    $SESSION['softDrink'] = 0;
+}
+if(!isset($SESSION['milk'])){
+    $SESSION['milk'] = 0;
+}
+
+//Cuando enviamos el formulario, se debe enviar a en este mismo fichero
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $name = $_POST['name'];
         $product = $_POST['product'];
         $quantity = $_POST['quantity'];
+        //Para guardar en la sesión el nombre del producto seleccionado en el formulario
+        $_SESSION["name"] = $name;
 
             if(isset($_POST["add"])){
             switch ($product) {
                 case 'milk':
-                    $quantityMilk += $quantity;
+                    //Para guardar en la sesión el producto
+                    //$quantityMilk += $quantity;
+                    $SESSION['milk'] += $quantity;
                     break;
                 case 'softDrink':
-                    $quantitySoftDrink += $quantity;
+                    //Para guardar en la sesión el producto
+                    //$quantitySoftDrink += $quantity;
+                    $SESSION['softDrink'] += $quantity;
                     break;
                 default:
                     echo "<br> <p> Error. Producto no encontrado </p>";
@@ -64,7 +78,7 @@ caso mostrar error.
     <!-- form with input fields and 3 buttons -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="name">Worker name:</label>
-            <input type="text" id="name" name="name" placeholder="El teu nom" required>
+            <input type="text" id="name" name="name" value="<?php echo isset($POST['name']) ? $POST['name'] : ''; ?>"><br><br>
         <br>
         <label for="product">Choose product:</label>
         <br>
@@ -87,17 +101,12 @@ caso mostrar error.
    
     <!-- list values worker, milk, softdrink -->
     <h2>Inventory:</h2>
-    <label for="productName">worker:  </label>
-    <input type="text" id="totalProduct" name="totalProduct">
-    <label for="totalUnitsMilk">units milk: </label>
-    <input type="number" id="totalUnitsMilk" name="totalUnitsMilk">
-    <label for="totalUnitsSoftDrink">units soft drink: </label>
-    <input type="number" id="totalUnitsSoftDrink" name="totalUnitsSoftDrink">
-<!--
-    <p>worker: </p>
-    <p>units milk: </p>
-    <p>units soft drink: </p>
--->
+    <!-- Añadimos codigo php para que se aplique condicion (ternaria) a cada nodo parrafo,
+     si esta vacio añadir el valor de worker y si no, añade texto vacío-->
+    <p>worker: <?php echo isset($name) ? $name : ''; ?></p>
+    <p>units milk: <?php echo isset($quantityMilk) ? $quantityMilk : ''; ?></p>
+    <p>units soft drink: <?php echo isset($quantitySoftDrink) ? $quantitySoftDrink : ''; ?></p>
+
 </body>
  
 </html>
