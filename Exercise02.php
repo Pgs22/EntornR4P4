@@ -8,32 +8,34 @@ c) Añade un botón para calcular el valor medio.
 
 <?php
 // Creamos sesión con el metodo
-//session_start();
+session_start();
+// PAra iniciar el array si no existe en la sesión
+if (!isset($_SESSION['numbers'])) {
+    $_SESSION['numbers'] = [10, 20, 30];
+}
 
 // Define initial array first time 10,20,30
-$numbers = [10, 20, 30]; // Creo un Array sin session
-//if(!isset($SESSION['numbers'])){ // Inicializo un array con estos valores en la session
-//    $SESSION['numbers'] = array(10, 20, 30);
-//}
+//$numbers = [10, 20, 30]; // Creo un Array sin session
 
-// to process the form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //detect button modify
-    if(isset($_POST['modify'])){
+    if(!isset($SESSION['numbers'])){ // Inicializo un array con estos valores en la session
+    //if(isset($_POST['modify'])){
         // Obtener los datos del formulario
         $position = $_POST['position'];
         $value = $_POST['value'];
+        
         //Para modificar la posicion seleccionada en el array con session
-        //$_SESSION['NUMBERS'][$position] = $value;
+        $_SESSION['numbers'][$position] = $value;
 
         // Modificar el valor en la posición sin sesión
-        $numbers[$position - 1] = $value;
-    
+        //$numbers[$position] = $value;   
     }else if(isset($_POST['average'])){
         // Calcular la media
-        //$average = array_sum(array: $_SESSION['numbers']);
-        $average = array_sum(array: $_numbers);
-        $average = number_format(num: $average,decimals: 2);
+        $average = array_sum(array: $_SESSION['numbers']) / count($_SESSION['numbers']);
+        //La funcion array_sum, suma todos los valores, que usaremos como dividendo
+        //Usamos count para poder contar el número de posiciones del Array y obtener el divisor para hacer la division
+        //$average = array_sum($numbers) / count($numbers);
     }
 }
 ?>
@@ -45,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Exercise02</title>
 </head>
 <body>
+    <!-- Creamos un formulario que seleccionamos una opción del listado y escribimos el valor a modificar -->
 <form method="post">
     <h2>Position to modify:</h2>
     <select name=position id="position">
@@ -52,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <option value="1">2</option>
         <option value="2">3</option>
     </select>
+    <!-- Añadimos el tipo number para escribir el valor, y los botones modificar, media y reset -->
     <h2>New value:</h2>
     <input type="number" name="value" id="value"><br><br>        
     <input type="submit" value="modify" name="modify">
@@ -61,11 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php
-// Mostrar el array actual
-echo "Array actual: ";
-print_r($numeros);
+// Mostrar el array actual, solo los valores separados por una coma y sin imprimir las posiciones
+echo "Current Array: ";
+foreach ($numbers as $value) {
+    echo $value . ", ";
+}
+//print_r($numbers);
 ?>
-<!-- Mostrar el valor medio (solo si se ha calculado)-->
+<!-- Mostrar el valor medio si se ha calculado la media -->
 <!--<p>Current array: <?php //echo isset($SESSION['softDrink']) ? $SESSION['softDrink'] : ''; ?></p> -->
 <p>Average: <?php echo isset($average) ? $average : ''; ?></p>
 
