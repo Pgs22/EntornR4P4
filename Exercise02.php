@@ -9,18 +9,14 @@ c) Añade un botón para calcular el valor medio.
 <?php
 // Creamos sesión con el metodo
 session_start();
-// PAra iniciar el array si no existe en la sesión
+// Para iniciar el array si no existe en la sesión
 if (!isset($_SESSION['numbers'])) {
     $_SESSION['numbers'] = [10, 20, 30];
 }
 
-// Define initial array first time 10,20,30
-//$numbers = [10, 20, 30]; // Creo un Array sin session
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //detect button modify
-    if(!isset($SESSION['numbers'])){ // Inicializo un array con estos valores en la session
-    //if(isset($_POST['modify'])){
+    //Detectar si está inicializada el array
+    if(isset($_POST['modify'])) {
         // Obtener los datos del formulario
         $position = $_POST['position'];
         $value = $_POST['value'];
@@ -29,13 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['numbers'][$position] = $value;
 
         // Modificar el valor en la posición sin sesión
-        //$numbers[$position] = $value;   
     }else if(isset($_POST['average'])){
         // Calcular la media
-        $average = array_sum(array: $_SESSION['numbers']) / count($_SESSION['numbers']);
         //La funcion array_sum, suma todos los valores, que usaremos como dividendo
         //Usamos count para poder contar el número de posiciones del Array y obtener el divisor para hacer la division
-        //$average = array_sum($numbers) / count($numbers);
+        //$average = array_sum($_SESSION['numbers']) / count($_SESSION['numbers']);
+        //si lo queremos solo con 2 decimales usamos la funcion round para redondear con 2 digitos
+        $average = round(array_sum($_SESSION['numbers']) / count($_SESSION['numbers']), 2);
+
     }
 }
 ?>
@@ -67,14 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 // Mostrar el array actual, solo los valores separados por una coma y sin imprimir las posiciones
 echo "Current Array: ";
-foreach ($numbers as $value) {
-    echo $value . ", ";
+if (isset($_SESSION['numbers'])) {
+    echo implode(", ", $_SESSION['numbers']);
 }
-//print_r($numbers);
 ?>
 <!-- Mostrar el valor medio si se ha calculado la media -->
-<!--<p>Current array: <?php //echo isset($SESSION['softDrink']) ? $SESSION['softDrink'] : ''; ?></p> -->
 <p>Average: <?php echo isset($average) ? $average : ''; ?></p>
-
 </body>
 </html>
