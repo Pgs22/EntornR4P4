@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
-<-- Para elercicio 3 -->
+
+<!-- Para elercicio 3 -->
 
 <!-- 
-Crea un código php que permita ges􀆟onar una lista de la compra. (5 puntos)
-a) Permite asignar un nombre, can􀆟dad y precio a un item. (0,5 puntos)
+Crea un código php que permita gestionar una lista de la compra. (5 puntos)
+a) Permite asignar un nombre, cantidad y precio a un item. (0,5 puntos)
 b) Permite añadir un nuevo item. (1 punto) """PASO1"""
 c) Permite editar un item en concreto. (1 punto) """PASO4"""UPDATE
 d) Permite borrar un item en concreto. (1 punto)"""PASO3"""INDEX
 e) Permite almacenar de cada item su coste total (0,5 puntos) """PASO4"""UPDATE
 f) Muestra el coste total de la lista. (1 punto)"""PASO2""" -- COMICS
 -->
-
+<html>
 <head>
     <title>Shopping list</title>
     <style>
@@ -82,7 +82,7 @@ f) Muestra el coste total de la lista. (1 punto)"""PASO2""" -- COMICS
                 </tr>
             <?php } ?>
             <tr>
-                <td colspan="3" align="right"><strong>Total:</strong></td>
+                <td colspan="3" text-align="right"><strong>Total:</strong></td>
                 <td><?php echo $totalValue; ?></td>
                 <td>
                     <form method="post">

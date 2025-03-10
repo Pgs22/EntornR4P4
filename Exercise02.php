@@ -1,11 +1,9 @@
-<!DOCTYPE html>
 <!-- 
 Crea un php con un array inicial con 3 valores numéricos. (2 puntos)
 a) Crea un formulario que permita modificar el valor en una posición en concreto.
 b) Consigue que se mantenga las modificaciones en el array.
 c) Añade un botón para calcular el valor medio.
 -->
-
 <?php
 // Creamos sesión con el metodo
 session_start();
@@ -37,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Exercise02</title>
 </head>
 <body>
-    <!-- Creamos un formulario que seleccionamos una opción del listado y escribimos el valor a modificar -->
+    <!-- Creamos un formulario, seleccionamos una opción del listado y escribimos el valor a modificar -->
 <form method="post">
     <h2>Position to modify:</h2>
     <select name=position id="position">

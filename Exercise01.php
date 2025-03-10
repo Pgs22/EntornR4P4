@@ -1,3 +1,15 @@
+
+<!-- to interact with user -->
+<!DOCTYPE html>
+<!-- 
+Crea un formulario que permita gestionar la cantidad de refresco o leche que hay en un
+supermercado. (3 puntos)
+a) Se debe mantener el nombre del trabajador que está utilizando la aplicación.
+b) Se debe poder añadir y quitar leche o refresco seleccionando de una lista
+c) Se debe controlar que no se pueden quitar mas unidades de las que haya, en ese
+caso mostrar error.
+-->
+
 <?php
 // Creamos sesión con el metodo
 session_start();
@@ -75,16 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //$_SERVER['REQUEST_METHOD'] : Varia
 }
 ?>
 
-<!-- to interact with user -->
-<!DOCTYPE html>
-<!-- 
-Crea un formulario que permita gestionar la cantidad de refresco o leche que hay en un
-supermercado. (3 puntos)
-a) Se debe mantener el nombre del trabajador que está utilizando la aplicación.
-b) Se debe poder añadir y quitar leche o refresco seleccionando de una lista
-c) Se debe controlar que no se pueden quitar mas unidades de las que haya, en ese
-caso mostrar error.
--->
 <html>
 
 <head>
@@ -97,7 +99,7 @@ caso mostrar error.
     <!-- Creamos un formulario para enviar los datos a en este mismo fichero -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="name">Worker name:</label>
-        <input type="text" id="name" name="name" value="<?php echo isset($POST['name']) ? $POST['name'] : ''; ?>"><br><br>
+        <input type="text" id="name" name="name" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : ''; ?>"><br><br>
         <h2>Choose product:</h2>
         <select name=product id="product">
             <option value="milk">Milk</option>
